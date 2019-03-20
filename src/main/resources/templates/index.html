@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="base :: headstuff"></head>
+<body>
+<nav th:replace="base :: navbar"></nav>
+<div class="container">
+    <h2>Insecure Page</h2>
+    <div sec:authorize="isAuthenticated()">
+        This content is only shown to authenticated users.<br/>
+
+        <div sec:authorize="hasAuthority('ADMIN')">
+            This content is only shown to administrators.
+        </div>
+        <div sec:authorize="hasAuthority('USER')">
+            This content is only shown to users.
+        </div>
+        Logged user: <span sec:authentication="name">The value of the "name"
+        property of the authentication object should appear here.</span><br/>
+        Roles:
+        <span sec:authentication="principal.authorities">[USER, ADMIN]
+        </span><br/><br/>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        This content is only shown to anonymous users.
+    </div>
+
+</div>
+<nav th:replace="base :: footer"></nav>
+<th:block th:replace="base :: jslinks"></th:block>
+</body>
+</html>
